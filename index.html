@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>360FIT - High Intensity Fitness</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: '#8CE600',
+            'brand-dark': '#6bb300',
+            darkbg: '#0d0d0d',
+            darkcard: '#18181b',
+            darkborder: '#27272a'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #050505;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    /* Glow utility styles */
+    .glow-brand {
+      box-shadow: 0 0 20px rgba(140, 230, 0, 0.35);
+    }
+    .glow-brand-sm {
+      box-shadow: 0 0 10px rgba(140, 230, 0, 0.25);
+    }
+    .text-glow {
+      text-shadow: 0 0 10px rgba(140, 230, 0, 0.5);
+    }
+
+    /* Glassmorphism card effects */
+    .glass-card {
+      background: rgba(24, 24, 27, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .glass-card-accent {
+      background: linear-gradient(135deg, rgba(140, 230, 0, 0.12) 0%, rgba(24, 24, 27, 0.8) 100%);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(140, 230, 0, 0.3);
+    }
+
+    /* Animated pulse ring */
+    @keyframes ringPulse {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.05); opacity: 0.4; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+
+    .pulse-ring {
+      animation: ringPulse 2.5s infinite ease-in-out;
+    }
+
+    /* Custom scrollbar for mobile frame */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-2 sm:p-6 bg-neutral-950">
+
+  <!-- Main Container / Outer Display Frame -->
+  <div class="w-full max-w-md mx-auto flex flex-col h-[92vh] max-h-[880px] bg-darkbg border border-neutral-800 rounded-[44px] shadow-2xl relative overflow-hidden select-none">
+    
+    <!-- Top Phone Notch / Dynamic Bar -->
+    <div class="w-full pt-3 px-7 flex items-center justify-between text-xs text-neutral-400 z-50 bg-darkbg/90 backdrop-blur-md shrink-0">
+      <span class="font-semibold text-white">9:41</span>
+      <!-- Camera Pill Notch -->
+      <div class="w-20 h-4 bg-black rounded-full flex items-center justify-center gap-1.5 border border-neutral-800">
+        <div class="w-2 h-2 rounded-full bg-neutral-900 border border-neutral-700"></div>
+        <div class="w-1.5 h-1.5 rounded-full bg-indigo-900/50"></div>
+      </div>
+      <div class="flex items-center gap-1.5">
+        <i data-lucide="signal" class="w-3.5 h-3.5"></i>
+        <i data-lucide="wifi" class="w-3.5 h-3.5"></i>
+        <i data-lucide="battery" class="w-4 h-4 text-white"></i>
+      </div>
+    </div>
+
+    <!-- Scrollable Screen Content Container -->
+    <div id="screenContainer" class="flex-1 overflow-y-auto no-scrollbar pb-24 pt-3 px-4">
+
+      <!-- ================= HOME TAB ================= -->
+      <section id="tab-home" class="tab-content space-y-5">
+        <!-- User Profile Header -->
+        <div class="flex items-center justify-between pt-2">
+          <div class="flex items-center gap-3">
+            <div class="relative">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" 
+                   alt="Alex Morgan" 
+                   class="w-12 h-12 rounded-full object-cover border-2 border-brand p-0.5"
+                   onerror="this.src='https://placehold.co/100x100/18181b/8CE600?text=AM'">
+              <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-brand rounded-full border-2 border-darkbg"></span>
+            </div>
+            <div>
+              <p class="text-xs text-neutral-400 font-medium uppercase tracking-wider">Welcome back</p>
+              <h1 class="text-xl font-bold text-white tracking-tight">Alex Morgan</h1>
+            </div>
+          </div>
+          <!-- Streak Pill -->
+          <div class="flex items-center gap-1.5 bg-brand/10 border border-brand/30 px-3 py-1.5 rounded-full">
+            <i data-lucide="flame" class="w-4 h-4 text-brand fill-brand"></i>
+            <span class="text-xs font-bold text-brand">12 Day Streak</span>
+          </div>
+        </div>
+
+        <!-- Metric Cards Grid -->
+        <div class="grid grid-cols-2 gap-3">
+          <!-- Active Calories -->
+          <div class="glass-card p-4 rounded-2xl flex flex-col justify-between relative overflow-hidden group">
+            <div class="flex justify-between items-start">
+              <span class="text-xs text-neutral-400 font-medium">Calories Burned</span>
+              <div class="p-2 bg-brand/10 rounded-xl text-brand">
+                <i data-lucide="zap" class="w-4 h-4"></i>
+              </div>
+            </div>
+            <div class="mt-3">
+              <span class="text-2xl font-black text-white">684</span>
+              <span class="text-xs text-neutral-400 font-normal"> / 800 kcal</span>
+            </div>
+            <div class="w-full bg-neutral-800 h-1.5 rounded-full mt-2 overflow-hidden">
+              <div class="bg-brand h-full rounded-full" style="width: 85%"></div>
+            </div>
+          </div>
+
+          <!-- Active Time -->
+          <div class="glass-card p-4 rounded-2xl flex flex-col justify-between">
+            <div class="flex justify-between items-start">
+              <span class="text-xs text-neutral-400 font-medium">Active Time</span>
+              <div class="p-2 bg-brand/10 rounded-xl text-brand">
+                <i data-lucide="timer" class="w-4 h-4"></i>
+              </div>
+            </div>
+            <div class="mt-3">
+              <span class="text-2xl font-black text-white">48</span>
+              <span class="text-xs text-neutral-400 font-normal"> / 60 mins</span>
+            </div>
+            <div class="w-full bg-neutral-800 h-1.5 rounded-full mt-2 overflow-hidden">
+              <div class="bg-brand h-full rounded-full" style="width: 78%"></div>
+            </div>
+          </div>
+
+          <!-- Heart Rate -->
+          <div class="glass-card p-4 rounded-2xl flex flex-col justify-between">
+            <div class="flex justify-between items-start">
+              <span class="text-xs text-neutral-400 font-medium">Avg Heart Rate</span>
+              <div class="p-2 bg-red-500/10 rounded-xl text-red-400">
+                <i data-lucide="heart" class="w-4 h-4"></i>
+              </div>
+            </div>
+            <div class="mt-3 flex items-baseline gap-1">
+              <span class="text-2xl font-black text-white">142</span>
+              <span class="text-xs text-neutral-400">BPM</span>
+            </div>
+            <p class="text-[10px] text-emerald-400 mt-1 flex items-center gap-0.5">
+              <i data-lucide="trending-up" class="w-3 h-3"></i> Optimal Zone
+            </p>
+          </div>
+
+          <!-- Completed Workouts -->
+          <div class="glass-card p-4 rounded-2xl flex flex-col justify-between">
+            <div class="flex justify-between items-start">
+              <span class="text-xs text-neutral-400 font-medium">Weekly Goal</span>
+              <div class="p-2 bg-brand/10 rounded-xl text-brand">
+                <i data-lucide="trophy" class="w-4 h-4"></i>
+              </div>
+            </div>
+            <div class="mt-3">
+              <span class="text-2xl font-black text-white">4</span>
+              <span class="text-xs text-neutral-400"> / 5 Workouts</span>
+            </div>
+            <p class="text-[10px] text-brand mt-1">1 session left for badge</p>
+          </div>
+        </div>
+
+        <!-- Featured Spotlight Workout Card -->
+        <div class="glass-card-accent p-5 rounded-3xl relative overflow-hidden">
+          <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-brand/20 rounded-full blur-2xl"></div>
+          
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-black uppercase tracking-widest bg-brand text-black px-2.5 py-0.5 rounded-full">
+              TODAY'S INTENSITY
+            </span>
+            <span class="text-xs text-neutral-300 font-medium flex items-center gap-1">
+              <i data-lucide="clock" class="w-3.5 h-3.5 text-brand"></i> 35 Mins
+            </span>
+          </div>
+
+          <h2 class="text-xl font-extrabold text-white mt-1">360 HIIT Ignite</h2>
+          <p class="text-xs text-neutral-300 mt-1">Full body metabolic conditioning. 4 sets of explosive intervals.</p>
+
+          <div class="mt-4 flex items-center justify-between pt-2">
+            <div class="flex -space-x-2">
+              <img class="w-7 h-7 rounded-full border border-darkbg object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" alt="user">
+              <img class="w-7 h-7 rounded-full border border-darkbg object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" alt="user">
+              <div class="w-7 h-7 rounded-full border border-darkbg bg-neutral-800 flex items-center justify-center text-[10px] font-bold text-brand">+12</div>
+            </div>
+
+            <button onclick="switchTab('timer'); startWorkoutSim();" class="bg-brand text-black font-extrabold px-5 py-2.5 rounded-xl flex items-center gap-2 hover:bg-brand-dark transition text-xs shadow-lg shadow-brand/20">
+              <i data-lucide="play" class="w-4 h-4 fill-black"></i> START NOW
+            </button>
+          </div>
+        </div>
+
+        <!-- Upcoming Live Class Section -->
+        <div>
+          <div class="flex justify-between items-center mb-3">
+            <h3 class="text-sm font-bold text-white tracking-wide">Upcoming Live Sessions</h3>
+            <span class="text-xs text-brand font-semibold hover:underline cursor-pointer">View All</span>
+          </div>
+
+          <div class="glass-card p-3.5 rounded-2xl flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-xl bg-neutral-800 flex flex-col items-center justify-center text-center border border-neutral-700">
+                <span class="text-[10px] uppercase font-bold text-brand">TODAY</span>
+                <span class="text-sm font-black text-white">5:30</span>
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-white">Power Strength 360</h4>
+                <p class="text-xs text-neutral-400">Coach Marcus • Arena 2</p>
+              </div>
+            </div>
+            <button class="px-3 py-1.5 rounded-xl text-xs font-bold bg-neutral-800 text-neutral-200 border border-neutral-700 hover:border-brand hover:text-brand transition">
+              Book
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= WORKOUTS TAB ================= -->
+      <section id="tab-workouts" class="tab-content hidden space-y-5">
+        <div class="flex justify-between items-center pt-2">
+          <div>
+            <h1 class="text-2xl font-black text-white tracking-tight">WORKOUTS</h1>
+            <p class="text-xs text-neutral-400">Select your high intensity program</p>
+          </div>
+          <button class="p-2 bg-neutral-800 rounded-xl border border-neutral-700 text-neutral-300">
+            <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <!-- Category Selector Filter -->
+        <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+          <button class="px-4 py-2 rounded-xl bg-brand text-black font-extrabold text-xs whitespace-nowrap">All Routines</button>
+          <button class="px-4 py-2 rounded-xl glass-card text-neutral-300 font-bold text-xs hover:text-white whitespace-nowrap">HIIT Core</button>
+          <button class="px-4 py-2 rounded-xl glass-card text-neutral-300 font-bold text-xs hover:text-white whitespace-nowrap">Strength 360</button>
+          <button class="px-4 py-2 rounded-xl glass-card text-neutral-300 font-bold text-xs hover:text-white whitespace-nowrap">Cardio Burst</button>
+          <button class="px-4 py-2 rounded-xl glass-card text-neutral-300 font-bold text-xs hover:text-white whitespace-nowrap">Recovery</button>
+        </div>
+
+        <!-- Workout Cards Grid -->
+        <div class="space-y-3">
+          <!-- Card 1 -->
+          <div class="glass-card rounded-2xl overflow-hidden relative group border border-neutral-800 hover:border-brand/40 transition">
+            <div class="h-32 bg-cover bg-center relative" style="background-image: url('https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80');">
+              <div class="absolute inset-0 bg-gradient-to-t from-darkbg via-darkbg/40 to-transparent"></div>
+              <span class="absolute top-3 left-3 bg-red-600/90 text-white font-black text-[10px] px-2.5 py-1 rounded-md uppercase tracking-wider">
+                EXTREME
+              </span>
+              <span class="absolute top-3 right-3 bg-black/60 backdrop-blur-md text-brand font-bold text-xs px-2.5 py-1 rounded-full border border-brand/30">
+                45 MIN
+              </span>
+            </div>
+            <div class="p-4">
+              <h3 class="text-base font-bold text-white">Full Body Shred 360</h3>
+              <p class="text-xs text-neutral-400 mt-1">High speed kettlebell & plyometrics designed for max burn.</p>
+              <div class="flex items-center justify-between mt-4">
+                <div class="flex items-center gap-3 text-xs text-neutral-400">
+                  <span class="flex items-center gap-1"><i data-lucide="flame" class="w-3.5 h-3.5 text-brand"></i> 520 kcal</span>
+                  <span class="flex items-center gap-1"><i data-lucide="bar-chart-2" class="w-3.5 h-3.5"></i> Advanced</span>
+                </div>
+                <button onclick="switchTab('timer'); startWorkoutSim();" class="p-2.5 bg-brand text-black rounded-xl hover:bg-brand-dark transition font-bold">
+                  <i data-lucide="play" class="w-4 h-4 fill-black"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="glass-card rounded-2xl overflow-hidden relative group border border-neutral-800 hover:border-brand/40 transition">
+            <div class="h-32 bg-cover bg-center relative" style="background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80');">
+              <div class="absolute inset-0 bg-gradient-to-t from-darkbg via-darkbg/40 to-transparent"></div>
+              <span class="absolute top-3 left-3 bg-brand text-black font-black text-[10px] px-2.5 py-1 rounded-md uppercase tracking-wider">
+                STRENGTH
+              </span>
+              <span class="absolute top-3 right-3 bg-black/60 backdrop-blur-md text-brand font-bold text-xs px-2.5 py-1 rounded-full border border-brand/30">
+                30 MIN
+              </span>
+            </div>
+            <div class="p-4">
+              <h3 class="text-base font-bold text-white">Dumbbell Power Circuit</h3>
+              <p class="text-xs text-neutral-400 mt-1">Hypertrophy intervals focused on upper body overload.</p>
+              <div class="flex items-center justify-between mt-4">
+                <div class="flex items-center gap-3 text-xs text-neutral-400">
+                  <span class="flex items-center gap-1"><i data-lucide="flame" class="w-3.5 h-3.5 text-brand"></i> 380 kcal</span>
+                  <span class="flex items-center gap-1"><i data-lucide="bar-chart-2" class="w-3.5 h-3.5"></i> Intermediate</span>
+                </div>
+                <button onclick="switchTab('timer'); startWorkoutSim();" class="p-2.5 bg-brand text-black rounded-xl hover:bg-brand-dark transition font-bold">
+                  <i data-lucide="play" class="w-4 h-4 fill-black"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TIMER / TRACKER TAB ================= -->
+      <section id="tab-timer" class="tab-content hidden space-y-6">
+        <div class="text-center pt-2">
+          <span class="text-xs font-black text-brand tracking-widest uppercase">ACTIVE WORKOUT TRACKER</span>
+          <h1 class="text-xl font-black text-white tracking-tight mt-0.5">360 HIIT Ignite Routine</h1>
+        </div>
+
+        <!-- Interactive Animated Circular Timer Display -->
+        <div class="relative w-64 h-64 mx-auto flex items-center justify-center">
+          <!-- Pulse Outer Glow Ring -->
+          <div class="absolute inset-0 rounded-full border-2 border-brand/20 pulse-ring"></div>
+          
+          <!-- SVG Circular Progress Bar -->
+          <svg class="w-full h-full transform -rotate-90">
+            <circle cx="128" cy="128" r="105" stroke="#27272a" stroke-width="12" fill="transparent" />
+            <circle id="timerProgress" cx="128" cy="128" r="105" stroke="#8CE600" stroke-width="12" 
+                    stroke-dasharray="660" stroke-dashoffset="180" stroke-linecap="round" fill="transparent"
+                    class="transition-all duration-1000 ease-linear" />
+          </svg>
+
+          <!-- Inner Timer Text Overlay -->
+          <div class="absolute flex flex-col items-center justify-center text-center">
+            <div id="heartPulse" class="flex items-center gap-1 bg-red-500/10 border border-red-500/30 text-red-400 px-2.5 py-0.5 rounded-full text-[10px] font-bold mb-2">
+              <i data-lucide="heart" class="w-3 h-3 fill-red-500 animate-pulse"></i>
+              <span id="liveBpm">154 BPM</span>
+            </div>
+            <span id="timerDisplay" class="text-5xl font-black text-white font-mono tracking-tighter">00:45</span>
+            <span id="timerStatus" class="text-xs text-brand font-bold uppercase tracking-widest mt-1">INTERVAL 3 OF 8</span>
+          </div>
+        </div>
+
+        <!-- Workout Realtime Metrics Bar -->
+        <div class="grid grid-cols-3 gap-2 bg-neutral-900/80 p-3.5 rounded-2xl border border-neutral-800 text-center">
+          <div>
+            <span class="text-[10px] text-neutral-400 font-medium block">SET</span>
+            <span class="text-lg font-black text-white">03<span class="text-xs text-neutral-500">/04</span></span>
+          </div>
+          <div class="border-x border-neutral-800">
+            <span class="text-[10px] text-neutral-400 font-medium block">EST. BURN</span>
+            <span class="text-lg font-black text-brand">210 <span class="text-xs font-normal">kcal</span></span>
+          </div>
+          <div>
+            <span class="text-[10px] text-neutral-400 font-medium block">REST TIMER</span>
+            <span class="text-lg font-black text-white">15s</span>
+          </div>
+        </div>
+
+        <!-- Next Exercise Banner -->
+        <div class="glass-card p-3.5 rounded-2xl flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-brand/10 text-brand flex items-center justify-center font-black">
+              <i data-lucide="activity" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <span class="text-[10px] text-neutral-400 uppercase font-bold">UP NEXT</span>
+              <h4 class="text-xs font-bold text-white">Explosive Burpees to Press</h4>
+            </div>
+          </div>
+          <span class="text-xs font-extrabold text-neutral-400">45 SEC</span>
+        </div>
+
+        <!-- Controls -->
+        <div class="flex items-center justify-center gap-4 pt-2">
+          <button id="resetTimerBtn" onclick="resetWorkoutSim()" class="p-4 rounded-2xl bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-700 transition">
+            <i data-lucide="rotate-ccw" class="w-6 h-6"></i>
+          </button>
+
+          <button id="toggleTimerBtn" onclick="toggleWorkoutSim()" class="p-5 rounded-2xl bg-brand text-black glow-brand font-black transition hover:scale-105 active:scale-95">
+            <i id="toggleTimerIcon" data-lucide="pause" class="w-7 h-7 fill-black"></i>
+          </button>
+
+          <button onclick="nextWorkoutStep()" class="p-4 rounded-2xl bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-700 transition">
+            <i data-lucide="skip-forward" class="w-6 h-6"></i>
+          </button>
+        </div>
+      </section>
+
+      <!-- ================= LEADERBOARD TAB ================= -->
+      <section id="tab-leaderboard" class="tab-content hidden space-y-5">
+        <div class="flex justify-between items-center pt-2">
+          <div>
+            <h1 class="text-2xl font-black text-white tracking-tight">LEADERBOARD</h1>
+            <p class="text-xs text-neutral-400">Weekly Intensity Challenge</p>
+          </div>
+          <div class="bg-neutral-800 px-3 py-1 rounded-xl border border-neutral-700 text-xs font-bold text-brand">
+            Week 42
+          </div>
+        </div>
+
+        <!-- Top 3 Podium View -->
+        <div class="grid grid-cols-3 gap-2 items-end pt-4 pb-2">
+          <!-- Rank 2 -->
+          <div class="glass-card p-3 rounded-2xl text-center flex flex-col items-center">
+            <div class="relative mb-2">
+              <img class="w-12 h-12 rounded-full object-cover border-2 border-slate-300" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120" alt="Rank 2">
+              <span class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-slate-300 text-black font-black text-[10px] w-5 h-5 rounded-full flex items-center justify-center">2</span>
+            </div>
+            <p class="text-xs font-bold text-white truncate w-full">Marcus V.</p>
+            <p class="text-[10px] text-brand font-bold mt-0.5">4,820 pts</p>
+          </div>
+
+          <!-- Rank 1 (Gold) -->
+          <div class="glass-card-accent p-3.5 rounded-2xl text-center flex flex-col items-center -translate-y-2 border-brand shadow-lg shadow-brand/10">
+            <div class="relative mb-2">
+              <i data-lucide="crown" class="w-5 h-5 text-yellow-400 absolute -top-5 left-1/2 -translate-x-1/2"></i>
+              <img class="w-14 h-14 rounded-full object-cover border-2 border-brand" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120" alt="Rank 1">
+              <span class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-brand text-black font-black text-[10px] w-5 h-5 rounded-full flex items-center justify-center">1</span>
+            </div>
+            <p class="text-xs font-black text-white truncate w-full">Sarah K.</p>
+            <p class="text-xs text-brand font-black mt-0.5">5,240 pts</p>
+          </div>
+
+          <!-- Rank 3 -->
+          <div class="glass-card p-3 rounded-2xl text-center flex flex-col items-center">
+            <div class="relative mb-2">
+              <img class="w-12 h-12 rounded-full object-cover border-2 border-amber-600" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120" alt="Rank 3">
+              <span class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-amber-600 text-white font-black text-[10px] w-5 h-5 rounded-full flex items-center justify-center">3</span>
+            </div>
+            <p class="text-xs font-bold text-white truncate w-full">David L.</p>
+            <p class="text-[10px] text-brand font-bold mt-0.5">4,610 pts</p>
+          </div>
+        </div>
+
+        <!-- Leaderboard List -->
+        <div class="space-y-2">
+          <!-- User Rank Item -->
+          <div class="glass-card-accent p-3 rounded-xl flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="text-xs font-black text-brand w-4">4</span>
+              <img class="w-9 h-9 rounded-full object-cover border border-brand" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" alt="You">
+              <div>
+                <p class="text-xs font-bold text-white">Alex Morgan <span class="text-[10px] text-brand bg-brand/20 px-1.5 py-0.2 rounded font-normal ml-1">YOU</span></p>
+                <p class="text-[10px] text-neutral-400">12 Workouts Completed</p>
+              </div>
+            </div>
+            <span class="text-xs font-black text-white">4,390 pts</span>
+          </div>
+
+          <!-- Other Users -->
+          <div class="glass-card p-3 rounded-xl flex items-center justify-between opacity-80">
+            <div class="flex items-center gap-3">
+              <span class="text-xs font-bold text-neutral-400 w-4">5</span>
+              <img class="w-9 h-9 rounded-full object-cover" src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100" alt="User">
+              <div>
+                <p class="text-xs font-bold text-white">Chris Evans</p>
+                <p class="text-[10px] text-neutral-400">10 Workouts Completed</p>
+              </div>
+            </div>
+            <span class="text-xs font-bold text-neutral-300">4,120 pts</span>
+          </div>
+
+          <div class="glass-card p-3 rounded-xl flex items-center justify-between opacity-80">
+            <div class="flex items-center gap-3">
+              <span class="text-xs font-bold text-neutral-400 w-4">6</span>
+              <img class="w-9 h-9 rounded-full object-cover" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100" alt="User">
+              <div>
+                <p class="text-xs font-bold text-white">Jessica Chen</p>
+                <p class="text-[10px] text-neutral-400">9 Workouts Completed</p>
+              </div>
+            </div>
+            <span class="text-xs font-bold text-neutral-300">3,980 pts</span>
+          </div>
+        </div>
+
+        <!-- Gym Community Feed -->
+        <div class="pt-2">
+          <h3 class="text-sm font-bold text-white mb-2">Live Gym Activity</h3>
+          <div class="glass-card p-3.5 rounded-2xl space-y-2">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <img class="w-7 h-7 rounded-full object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100" alt="Sarah">
+                <span class="text-xs font-bold text-white">Sarah K.</span>
+              </div>
+              <span class="text-[10px] text-neutral-400">12m ago</span>
+            </div>
+            <p class="text-xs text-neutral-300">Crushed a new Personal Record on 360 Full Body Shred! 🏋️‍♀️⚡</p>
+            <div class="flex items-center gap-3 pt-1 text-xs text-neutral-400">
+              <button class="flex items-center gap-1 text-brand hover:underline text-[11px] font-semibold">
+                <i data-lucide="thumbs-up" class="w-3.5 h-3.5"></i> High Five (24)
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= PROFILE TAB ================= -->
+      <section id="tab-profile" class="tab-content hidden space-y-5">
+        <!-- Profile Header Card -->
+        <div class="glass-card p-5 rounded-3xl text-center relative overflow-hidden">
+          <div class="w-20 h-20 mx-auto relative mb-3">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" 
+                 alt="Alex Morgan" 
+                 class="w-full h-full rounded-full object-cover border-2 border-brand p-0.5">
+            <span class="absolute bottom-1 right-1 p-1 bg-brand rounded-full text-black">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+            </span>
+          </div>
+          <h2 class="text-lg font-black text-white">Alex Morgan</h2>
+          <p class="text-xs text-brand font-semibold">360FIT Pro Member</p>
+
+          <div class="grid grid-cols-3 gap-2 mt-4 pt-4 border-t border-neutral-800">
+            <div>
+              <span class="text-base font-black text-white">48</span>
+              <span class="text-[10px] text-neutral-400 block">Workouts</span>
+            </div>
+            <div>
+              <span class="text-base font-black text-white">18.4k</span>
+              <span class="text-[10px] text-neutral-400 block">Total Burn</span>
+            </div>
+            <div>
+              <span class="text-base font-black text-white">12</span>
+              <span class="text-[10px] text-neutral-400 block">Badges</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 360 Progress Ring Section -->
+        <div class="glass-card p-4 rounded-2xl">
+          <h3 class="text-xs font-bold text-white uppercase tracking-wider mb-3">360° Monthly Transformation</h3>
+          <div class="flex items-center gap-4">
+            <!-- Mini Progress Visualizer -->
+            <div class="relative w-24 h-24 shrink-0 flex items-center justify-center">
+              <svg class="w-full h-full transform -rotate-90">
+                <circle cx="48" cy="48" r="40" stroke="#27272a" stroke-width="8" fill="transparent" />
+                <circle cx="48" cy="48" r="40" stroke="#8CE600" stroke-width="8" stroke-dasharray="250" stroke-dashoffset="60" stroke-linecap="round" fill="transparent" />
+              </svg>
+              <div class="absolute text-center">
+                <span class="text-base font-black text-white">76%</span>
+                <span class="text-[8px] text-neutral-400 block">GOAL</span>
+              </div>
+            </div>
+
+            <div class="space-y-2 text-xs">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-brand"></span>
+                <span class="text-neutral-300">Attendance: <strong class="text-white">19 / 24 Days</strong></span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                <span class="text-neutral-300">Target Calories: <strong class="text-white">Achieved</strong></span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-neutral-600"></span>
+                <span class="text-neutral-300">Strength Gains: <strong class="text-white">+8.5%</strong></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Achievements & Badges Grid -->
+        <div>
+          <h3 class="text-xs font-bold text-white uppercase tracking-wider mb-2">Unlocked Badges</h3>
+          <div class="grid grid-cols-4 gap-2">
+            <div class="glass-card p-2.5 rounded-xl text-center flex flex-col items-center">
+              <div class="w-9 h-9 rounded-full bg-brand/20 text-brand flex items-center justify-center mb-1">
+                <i data-lucide="flame" class="w-4 h-4 fill-brand"></i>
+              </div>
+              <span class="text-[9px] font-bold text-neutral-300">Streak Master</span>
+            </div>
+
+            <div class="glass-card p-2.5 rounded-xl text-center flex flex-col items-center">
+              <div class="w-9 h-9 rounded-full bg-brand/20 text-brand flex items-center justify-center mb-1">
+                <i data-lucide="zap" class="w-4 h-4 fill-brand"></i>
+              </div>
+              <span class="text-[9px] font-bold text-neutral-300">HIIT Beast</span>
+            </div>
+
+            <div class="glass-card p-2.5 rounded-xl text-center flex flex-col items-center">
+              <div class="w-9 h-9 rounded-full bg-brand/20 text-brand flex items-center justify-center mb-1">
+                <i data-lucide="award" class="w-4 h-4 text-brand"></i>
+              </div>
+              <span class="text-[9px] font-bold text-neutral-300">Top 5%</span>
+            </div>
+
+            <div class="glass-card p-2.5 rounded-xl text-center flex flex-col items-center opacity-40">
+              <div class="w-9 h-9 rounded-full bg-neutral-800 text-neutral-500 flex items-center justify-center mb-1">
+                <i data-lucide="lock" class="w-4 h-4"></i>
+              </div>
+              <span class="text-[9px] font-bold text-neutral-500">Century Club</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Bottom Mobile Navigation Bar -->
+    <nav class="absolute bottom-0 left-0 right-0 h-20 bg-darkbg/95 backdrop-blur-xl border-t border-neutral-800/80 px-4 flex items-center justify-around z-50">
+      <!-- Home Tab Button -->
+      <button onclick="switchTab('home')" id="nav-home" class="nav-btn flex flex-col items-center gap-1 text-brand transition">
+        <i data-lucide="home" class="w-5 h-5"></i>
+        <span class="text-[10px] font-bold tracking-tight">Home</span>
+      </button>
+
+      <!-- Workouts Tab Button -->
+      <button onclick="switchTab('workouts')" id="nav-workouts" class="nav-btn flex flex-col items-center gap-1 text-neutral-500 hover:text-white transition">
+        <i data-lucide="dumbell" class="w-5 h-5"></i>
+        <span class="text-[10px] font-bold tracking-tight">Workouts</span>
+      </button>
+
+      <!-- Center Dynamic Live/Timer Action Button -->
+      <button onclick="switchTab('timer')" id="nav-timer" class="flex flex-col items-center justify-center -translate-y-3">
+        <div class="w-12 h-12 rounded-full bg-brand text-black flex items-center justify-center shadow-lg shadow-brand/30 border-4 border-darkbg hover:scale-105 transition">
+          <i data-lucide="timer" class="w-6 h-6 stroke-[2.5]"></i>
+        </div>
+      </button>
+
+      <!-- Leaderboard Tab Button -->
+      <button onclick="switchTab('leaderboard')" id="nav-leaderboard" class="nav-btn flex flex-col items-center gap-1 text-neutral-500 hover:text-white transition">
+        <i data-lucide="trophy" class="w-5 h-5"></i>
+        <span class="text-[10px] font-bold tracking-tight">Ranks</span>
+      </button>
+
+      <!-- Profile Tab Button -->
+      <button onclick="switchTab('profile')" id="nav-profile" class="nav-btn flex flex-col items-center gap-1 text-neutral-500 hover:text-white transition">
+        <i data-lucide="user" class="w-5 h-5"></i>
+        <span class="text-[10px] font-bold tracking-tight">Profile</span>
+      </button>
+    </nav>
+
+    <!-- Bottom iOS Home Indicator Line -->
+    <div class="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-32 h-1 bg-neutral-700/60 rounded-full z-50"></div>
+  </div>
+
+  <!-- JavaScript App Logic & Interactions -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Navigation Switch Logic
+    function switchTab(tabId) {
+      // Hide all contents
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      
+      // Reset navigation icons state
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('text-brand');
+        btn.classList.add('text-neutral-500');
+      });
+
+      // Show targeted tab
+      const targetTab = document.getElementById(`tab-${tabId}`);
+      if (targetTab) {
+        targetTab.classList.remove('hidden');
+      }
+
+      // Highlight active nav item
+      const activeNav = document.getElementById(`nav-${tabId}`);
+      if (activeNav) {
+        activeNav.classList.remove('text-neutral-500');
+        activeNav.classList.add('text-brand');
+      }
+
+      // Reset scroll position on tab switch
+      document.getElementById('screenContainer').scrollTop = 0;
+    }
+
+    // Workout Timer Simulator Logic
+    let timerInterval = null;
+    let secondsLeft = 45;
+    let isRunning = false;
+
+    function updateTimerUI() {
+      const minutes = Math.floor(secondsLeft / 60);
+      const seconds = secondsLeft % 60;
+      const displayStr = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      
+      document.getElementById('timerDisplay').textContent = displayStr;
+
+      // Update SVG circular dash offset
+      const circle = document.getElementById('timerProgress');
+      const totalDash = 660;
+      const progressRatio = secondsLeft / 45;
+      circle.style.strokeDashoffset = totalDash - (totalDash * progressRatio);
+
+      // Random BPM fluctuation
+      const randomBpm = 148 + Math.floor(Math.random() * 12);
+      document.getElementById('liveBpm').textContent = `${randomBpm} BPM`;
+    }
+
+    function toggleWorkoutSim() {
+      const toggleIcon = document.getElementById('toggleTimerIcon');
+      if (isRunning) {
+        clearInterval(timerInterval);
+        isRunning = false;
+        toggleIcon.setAttribute('data-lucide', 'play');
+      } else {
+        isRunning = true;
+        toggleIcon.setAttribute('data-lucide', 'pause');
+        timerInterval = setInterval(() => {
+          if (secondsLeft > 0) {
+            secondsLeft--;
+            updateTimerUI();
+          } else {
+            secondsLeft = 45; // Reset interval loop
+            updateTimerUI();
+          }
+        }, 1000);
+      }
+      lucide.createIcons();
+    }
+
+    function startWorkoutSim() {
+      if (!isRunning) {
+        toggleWorkoutSim();
+      }
+    }
+
+    function resetWorkoutSim() {
+      clearInterval(timerInterval);
+      isRunning = false;
+      secondsLeft = 45;
+      updateTimerUI();
+      document.getElementById('toggleTimerIcon').setAttribute('data-lucide', 'play');
+      lucide.createIcons();
+    }
+
+    function nextWorkoutStep() {
+      resetWorkoutSim();
+      startWorkoutSim();
+    }
+
+    // Start timer on load automatically
+    window.onload = function() {
+      updateTimerUI();
+      toggleWorkoutSim();
+    };
+  </script>
+</body>
+</html>
